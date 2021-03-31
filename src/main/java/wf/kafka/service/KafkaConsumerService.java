@@ -8,6 +8,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import wf.kafka.rest.PaymentMessage;
 
 import java.util.Arrays;
 
@@ -19,7 +20,7 @@ public class KafkaConsumerService {
     final StreamsBuilder builder = new StreamsBuilder();
 
     @KafkaListener(topics = "${kafka.topic}")
-    public void consume(@Payload String message) {
+    public void consume(@Payload PaymentMessage message) {
         KStream<String, String> textLines = builder.stream("quickstart-events");
 
         KTable<String, Long> wordCounts = textLines
@@ -29,7 +30,7 @@ public class KafkaConsumerService {
 
 
 //        wordCounts.toStream().to("/topic/temperature", Produced.with(Serdes.String(), Serdes.Long()));
-        template.convertAndSend("/topic/temperature", message);
+        template.convertAndSend("/topic/temperature", message.toString());
 //        template.convertAndSend("/topic/temperature", wordCounts.toString());
     }
 
