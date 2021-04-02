@@ -30,7 +30,7 @@ public class KafkaConsumerService {
 
 
 //        wordCounts.toStream().to("/topic/temperature", Produced.with(Serdes.String(), Serdes.Long()));
-        template.convertAndSend("/topic/temperature", message.toString());
+        template.convertAndSend("/topic/temperature", message);
 //        template.convertAndSend("/topic/temperature", wordCounts.toString());
     }
 
